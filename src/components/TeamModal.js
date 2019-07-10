@@ -27,8 +27,7 @@ class TeamModal extends React.Component {
 
   render() {
       const closeBtn = <button className="close" onClick={this.props.toggle}>&times;</button>;
-      const { teamName, played, goalF, goalA, win, lose } = this.state;
-
+     
       return (
       <div>
         {/* <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button> */}

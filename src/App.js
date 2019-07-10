@@ -1,11 +1,9 @@
-import React, { useState, useEffect  }  from 'react';
+import React, { useState }  from 'react';
 import './assets/css/App.css';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
-import { Button } from 'reactstrap';
 
 import Table from './components/Table'
 import AppBar from './components/AppBar'
@@ -20,31 +18,48 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+let teams = [" "]
 
 function App() {
   const classes = useStyles();
-  const [team, setTeam] = useState([]);
-  const [teamName, setTeamName] = useState("");
   const [isOpen, setOpen] = useState(false);
 
   const toggle = () =>{
     setOpen(!isOpen)
   }
-  let teams = [0]
-  const addTeam = (teamName, pl, goalA, goalF, win, lose) =>{
-    teams = [...teams, {"teamName":teamName,"played": pl,"goalA": goalA,"goalF": goalF,"win": win,"lose": lose}]
-    console.log(teams)
-  }
+  
+  //input data from the manager
+  const addTeam = (teamName, pl, goalFor, goalAg, win, lose) =>{
+    //points and goal differences calculation
+    let pts = parseInt(win) * 3;
+    let goalDiff = parseInt(goalFor) - parseInt(goalAg);
 
+    //table array
+    teams = [...teams, {"teamName":teamName,"played": pl,"gd": goalDiff,"win": win,"lose": lose, "pts": pts}]
+    filterTeams()
+  }
+  
+  const filterTeams = () =>{
+    //delete initialized array
+    // delete teams[0]
+    if(teams[0] === " "){
+      teams.shift()
+    }
+
+    //sorting according to points
+    teams.sort((teamA, teamB)=> (teamA.pts > teamB.pts ? -1: 1))
+    
+  }
   return (
+    
     <div className="App">
       <AppBar/>
       <Container maxWidth="lg">
-        <Table team={"Team 1"} pl={16} goalA={30} goalF={20} win={5} lose={9}/>
+        <Table team={teams}/>
         <Fab color="primary" aria-label="Add" className={classes.fab} onClick={toggle}>
           <AddIcon />
         </Fab>
-        <TeamModal isOpen={isOpen} toggle={toggle} addTeam={addTeam}/>
+        <TeamModal isOpen={isOpen} toggle={toggle} addTeam={addTeam} teamLength={teams.length}/>
       </Container>
     </div>
   );
