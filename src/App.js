@@ -41,15 +41,42 @@ function App() {
   
   const filterTeams = () =>{
     //delete initialized array
-    // delete teams[0]
     if(teams[0] === " "){
       teams.shift()
     }
-
     //sorting according to points
     teams.sort((teamA, teamB)=> (teamA.pts > teamB.pts ? -1: 1))
-    
+
+    //sorting according to goal difference
+    // for(let x = 0; x < teams.length; x++){
+    //   if(teams[x].pts === teams[x+1].pts){
+    //       console.log(`${teams[x]} and ${teams[x+1]}`)
+    //   }
+    // }
+    teams.forEach(function (arrayItem) {
+    var x = arrayItem.pts;
+    console.log(x);
+});
   }
+
+  let sortByGoalDiff = () => {
+    let len = teams.length;
+    let swapped;
+    do {
+        swapped = false;
+        for (let i = 0; i < len; i++) {
+          
+            if (teams[i] > teams[i + 1]) {
+                let tmp = teams[i];
+                teams[i] = teams[i + 1];
+                teams[i + 1] = tmp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
+    return teams;
+  }
+
   return (
     
     <div className="App">
