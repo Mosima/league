@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect  }  from 'react';
 import './assets/css/App.css';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
-import DeleteIcon from '@material-ui/icons/Delete';
-import NavigationIcon from '@material-ui/icons/Navigation';
+import { Button } from 'reactstrap';
 
 import Table from './components/Table'
 import AppBar from './components/AppBar'
+import TeamModal from './components/TeamModal'
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -20,21 +20,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 function App() {
   const classes = useStyles();
+  const [team, setTeam] = useState([]);
+  const [teamName, setTeamName] = useState("");
+  const [isOpen, setOpen] = useState(false);
+
+  const toggle = () =>{
+    setOpen(!isOpen)
+  }
+
+  const addTeam = (teamName, pl, goalA, goalF, win, lose) =>{
+    let teams = []
+    teams.push([teamName, pl, goalA, goalF, win, lose])
+    console.log(teams)
+  }
+
   return (
     <div className="App">
       <AppBar/>
       <Container maxWidth="lg">
-        
-        <Table/>
+        <Table team={"Team 1"} pl={16} goalA={30} goalF={20} win={5} lose={9}/>
+        <Fab color="primary" aria-label="Add" className={classes.fab} onClick={toggle}>
+          <AddIcon />
+        </Fab>
+        <TeamModal isOpen={isOpen} toggle={toggle} addTeam={addTeam}/>
       </Container>
-      <Fab color="primary" aria-label="Add" className={classes.fab}>
-        <AddIcon />
-      </Fab>
-      <Fab color="secondary" aria-label="Edit" className={classes.fab}>
-        <Icon> create </Icon>
-      </Fab>
     </div>
   );
 }
