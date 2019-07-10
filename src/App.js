@@ -30,10 +30,9 @@ function App() {
   const toggle = () =>{
     setOpen(!isOpen)
   }
-
+  let teams = [0]
   const addTeam = (teamName, pl, goalA, goalF, win, lose) =>{
-    let teams = []
-    teams.push([teamName, pl, goalA, goalF, win, lose])
+    teams = [...teams, {"teamName":teamName,"played": pl,"goalA": goalA,"goalF": goalF,"win": win,"lose": lose}]
     console.log(teams)
   }
 
