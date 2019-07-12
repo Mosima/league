@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/css/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-notifications/lib/notifications.css';
 import 'typeface-roboto';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
