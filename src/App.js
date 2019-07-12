@@ -12,7 +12,7 @@ import TeamModal from "./components/TeamModal";
 const useStyles = makeStyles(theme => ({
   fab: {
     margin: theme.spacing(1),
-    left: theme.spacing(70)
+    // left: theme.spacing(70)
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
